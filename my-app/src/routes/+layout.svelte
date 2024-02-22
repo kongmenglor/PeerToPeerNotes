@@ -4,13 +4,16 @@
     import '../app.pcss';
     import './styles.css';
     import { page } from '$app/stores';
+	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+	import { storePopup } from '@skeletonlabs/skeleton';
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+			
 
 
 </script>
 
 <AppShell>
 	<svelte:fragment slot="header">
-		<nav class="w-full">
 		<!-- Insert the list: -->
 			<ul class="horizontal">
 				<!-- Change this out for home button when possible -->
@@ -19,10 +22,9 @@
 				</li>
 				
 				<li aria-current={$page.url.pathname === '/upload' ? 'page' : undefined}>
-					<a style="color:white;" class="btn variant-filled-primary" href="/upload">Upload Notes</a>
+					<a type="button" class="btn variant-filled bg-gray-300 block text-center border rounded-md gap-4" href="/upload">Upload Notes</a>
 				</li>
 			</ul>
-		</nav>
 		<!-- --- -->
 	</svelte:fragment>
 </AppShell>
@@ -53,11 +55,12 @@
 	}
 
 	ul {
-		background-color: #333;
 		list-style: none;
-		padding: 0;
 		display: flex;
+	}
 
+	a.btn:hover{
+		background-color: #9ae6b4; /* change to your desired color */
 	}
 
 </style>

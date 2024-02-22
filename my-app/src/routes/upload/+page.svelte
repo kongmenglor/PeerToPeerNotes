@@ -1,12 +1,11 @@
 <script lang='ts'>
-	import { ProgressBar } from '@skeletonlabs/skeleton';
-	import { FileDropzone } from '@skeletonlabs/skeleton';
-	import { Autocomplete } from '@skeletonlabs/skeleton';
-	import type { AutocompleteOption } from '@skeletonlabs/skeleton';
+	import { Autocomplete, popup, FileDropzone, ProgressBar } from '@skeletonlabs/skeleton';
+	import type { AutocompleteOption, PopupSettings  } from '@skeletonlabs/skeleton';
 
 	//Temp values to fill out later
 	let dept_input = '';
 	let number_input = '';
+	let teacher_input = '';
 	let class_dept_list:  AutocompleteOption<string> [] = [
 		{label: 'CSCI', value:'CSCI'}, 
 		{label: 'HASS', value:'HASS'} 
@@ -14,6 +13,10 @@
 	let class_number_list:  AutocompleteOption<string> [] = [
 		{label: '101', value:'101'}, 
 		{label: '102', value:'102'} 
+	];
+	let teacher_list:  AutocompleteOption<string> [] = [
+		{label: 'Bonkers McBonk', value:'Bonkers McBonk'}, 
+		{label: 'Zippy Wow III', value:'Zippy Wow III'} 
 	];
 
 	function onDeptSelect(event: CustomEvent<AutocompleteOption<string>>): void {
@@ -23,6 +26,29 @@
 	function onNumberSelect(event: CustomEvent<AutocompleteOption<string>>): void {
 		number_input = event.detail.label;
 	}
+	function onTeacherSelect(event: CustomEvent<AutocompleteOption<string>>): void {
+		teacher_input = event.detail.label;
+	}
+
+
+	let popupSettingsDept: PopupSettings = {
+		event: 'focus-click',
+		target: 'popupAutocompleteDept',
+		placement: 'bottom',
+	};
+
+	let popupSettingsNum: PopupSettings = {
+		event: 'focus-click',
+		target: 'popupAutocompleteNum',
+		placement: 'bottom',
+	};
+
+	let popupSettingsTeacher: PopupSettings = {
+		event: 'focus-click',
+		target: 'popupAutocompleteTeacher',
+		placement: 'bottom',
+	};
+
 
 
 </script>
@@ -42,20 +68,60 @@
 		<div class="mb-4 grid grid-cols-2">
 			<label for="class" class="bg-gray-300 block text-gray-700 mb-2 text-center w-30 p-2 border rounded-md">Class Number: </label>
 			<div class="grid grid-cols-2">
-				<input class="input bg-gray-100 w-15 border rounded-md" type="search" id="class_dept" name="class_dept" bind:value={dept_input} placeholder="CSCI" />
-				<Autocomplete bind:input={dept_input} options={class_dept_list} on:selection={onDeptSelect}/>
-				<input class="input bg-gray-100 w-15 border rounded-md" type="search" id="class_number" name="class_number" bind:value={number_input} placeholder="400" />
-				<Autocomplete bind:input={number_input} options={class_number_list} on:selection={onNumberSelect}/>
+				<input
+					class="input autocomplete"
+					type="search"
+					name="autocomplete-search-dept"
+					bind:value={dept_input}
+					placeholder="CSCI"
+					use:popup={popupSettingsDept}
+				/>
+				<div data-popup="popupAutocompleteDept" class="bg-gray-300 block text-gray-700 mb-2 text-center w-30 p-2 border rounded-md">
+					<Autocomplete
+						bind:input={dept_input}
+						options={class_dept_list}
+						on:selection={onDeptSelect}
+					/>
+				</div>
+				<input
+					class="input autocomplete"
+					type="search"
+					name="autocomplete-search-num"
+					bind:value={number_input}
+					placeholder="400"
+					use:popup={popupSettingsNum}
+				/>
+				<div data-popup="popupAutocompleteNum" class="bg-gray-300 block text-gray-700 mb-2 text-center w-30 p-2 border rounded-md">
+					<Autocomplete
+						bind:input={number_input}
+						options={class_number_list}
+						on:selection={onNumberSelect}
+					/>
+				</div>
 			</div>
 		</div>
 		<div class="mb-4 grid grid-cols-2">
 			<label for="teacher_name" class="bg-gray-300 block text-gray-700 mb-2 text-center w-30 p-2 border rounded-md">Teacher: </label>
-			<input type="text" id="teacher_name" name="teacher_name" class="bg-gray-100 w-30 border rounded-md">
+			<input
+				class="input autocomplete"
+				type="search"
+				name="autocomplete-search-num"
+				bind:value={teacher_input}
+				placeholder="Neil Dantam"
+				use:popup={popupSettingsTeacher}
+			/>
+			<div data-popup="popupAutocompleteTeacher" class="bg-gray-300 block text-gray-700 mb-2 text-center w-30 p-2 border rounded-md">
+				<Autocomplete
+					bind:input={teacher_input}
+					options={teacher_list}
+					on:selection={onTeacherSelect}
+				/>
+			</div>
 		</div>
 
 		<!-- Submit Button -->
 		<div class="mt-6 p-8 grid grid-cols-1 gap-2">
-			<button type="submit" class="w-full bg-gray-300 text-black p-2 rounded-md">Upload</button>
+			<button type="submit" class="w-full bg-gray-300 text-black p-2 rounded-md">Upload!</button>
 		</div>
 	</form>
 	<!-- {#if searching}
