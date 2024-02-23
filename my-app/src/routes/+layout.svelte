@@ -1,4 +1,4 @@
-<script>
+<script lang='ts'>
 	import "../app.pcss";
     import { AppShell, AppBar } from '@skeletonlabs/skeleton';
     import '../app.pcss';
@@ -7,6 +7,7 @@
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+	import home_button from '$lib/images/home_button.png';
 			
 
 
@@ -18,7 +19,9 @@
 			<ul class="horizontal">
 				<!-- Change this out for home button when possible -->
 				<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-					<a style="color:white;" class="btn variant-filled-primary" href="/">Home</a>
+					<a href="/">
+						<img class='right-px' src={home_button} alt="home_button" style="width:40px; height: 40px;"/>
+					</a>
 				</li>
 				
 				<li aria-current={$page.url.pathname === '/upload' ? 'page' : undefined}>
