@@ -32,19 +32,19 @@
 
 
 	let popupSettingsDept: PopupSettings = {
-		event: 'focus-click',
+		event: 'click',
 		target: 'popupAutocompleteDept',
 		placement: 'bottom',
 	};
 
 	let popupSettingsNum: PopupSettings = {
-		event: 'focus-click',
+		event: 'click',
 		target: 'popupAutocompleteNum',
 		placement: 'bottom',
 	};
 
 	let popupSettingsTeacher: PopupSettings = {
-		event: 'focus-click',
+		event: 'click',
 		target: 'popupAutocompleteTeacher',
 		placement: 'bottom',
 	};
@@ -54,7 +54,7 @@
 </script>
 
 <svelte:head>
-	<title>Unnamed Notes App - Upload</title>
+	<title>PeerToPeerNotes - Upload</title>
 	<meta name="description" content="Information To Enter" />
 </svelte:head>
 

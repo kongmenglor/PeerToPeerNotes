@@ -1,7 +1,8 @@
-<script>
+<script lang='ts'>
     import { Ratings, popup } from '@skeletonlabs/skeleton';
     import type { PopupSettings } from '@skeletonlabs/skeleton';
     import { icons } from './icons';
+    import download_button from 'download_button.png';
     
     export let card_data = {dept: 'DEFAULT', num: 'DEFAULT', teacher: 'DEFAULT', upload_date: new Date(2024, 0, 1), current_rating: 0.1};
 
@@ -22,6 +23,9 @@
 </script>
 
 <div class="p-4 bg-gray-300 text-black">
+    <a href="/">
+        <img class='right-px' src={download_button} alt="home_button" style="width:30px; height: 30px;"/>
+    </a>
     <button class="w-full bg-blue-500 text-black p-2 rounded-md" use:popup={popupClick}>Rate Notes</button>
 </div>
 
