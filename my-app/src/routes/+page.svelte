@@ -1,6 +1,14 @@
 <script lang='ts'>
-	import { Autocomplete, popup, FileDropzone, ProgressBar } from '@skeletonlabs/skeleton';
+	import { Autocomplete, popup, ProgressBar, AppBar } from '@skeletonlabs/skeleton';
 	import type { AutocompleteOption, PopupSettings  } from '@skeletonlabs/skeleton';
+	import { Alert } from 'flowbite-svelte';
+	import Card from '$lib/images/card.svelte'
+
+	let searching = false;
+	let searched = false;
+
+	// switch to using result array instead of counter
+	let results = ['filler', 'filler'];
 
 	//Temp values to fill out later
 	let dept_input = '';
@@ -49,6 +57,21 @@
 		placement: 'bottom',
 	};
 
+	function fetchData(){
+		//actual functionality
+		searching = true;
+		//TODO: fill out with actually getting supabase data
+		
+		setTimeout(() => {
+			searching = false;
+			searched = true;
+		}
+		, 5000);
+
+	}
+
+
+					
 </script>
 
 <svelte:head>
@@ -56,11 +79,20 @@
 	<meta name="description" content="Information To Enter" />
 </svelte:head>
 
+
+<Alert dismissable class="card max-w-xs h-22 mx-auto p-4 bg-gray-300 shadow-md rounded-md space-x-4">
+	<span class="block text-gray-700 font-bold mb-2 text-center p-2">Upload Notes</span>
+	<span class="block text-gray-700 font-bold mb-2 text-center text-sm">Takes as little as 30 seconds!</span>
+	<a href='/upload' class="btn w-full bg-blue-400 text-black p-2 rounded-md text-center">Upload</a>
+</Alert>
+
+
 <div>
 	<h1>PeerToPeerNotes</h1>
 </div>
+			
 
-<form class="max-w-2xl mx-auto p-8 bg-gray-300 shadow-md rounded-md grid grid-cols-2 space-x-4">
+<form on:submit|preventDefault={fetchData} class="max-w-2xl mx-auto p-8 bg-gray-300 shadow-md rounded-md grid grid-cols-2 space-x-4">
 	<div class="mb-4">
 		<label for="teacher_name" class="block text-gray-700 font-bold mb-2">Teacher Name: </label>
 		<input
@@ -116,26 +148,23 @@
 	</div>
 
 	<!-- Submit Button -->
-	<div class="mt-6 p-8 grid grid-cols-1 gap-2">
-		<button type="submit" class="w-full bg-blue-500 text-black p-2 rounded-md">Search</button>
+	<div class="mx-auto">
+		<button type="submit" class="w-30 bg-blue-400 text-black p-2 rounded-md">Search</button>
 	</div>
 </form>
-<!-- {#if searching}
+{#if searching}
 <div>
-	<ProgressBar meter="bg-sky-500" track=" bg-sky-500/30" class="w-full" value={undefined} />
+	<ProgressBar meter="bg-sky-500" track=" bg-sky-500/30" class="w-10/12 mx-auto" value={undefined} />
 </div>
 {/if}
 
 {#if searched}
-	<h1>Information Fields to Update: </h1>
-	<form on:submit|preventDefault={updateSchema} class='max-w-xl mx-auto p-8 bg-white shadow-md rounded-md' id='reportGen'>
-		<Template dataShown={dataToShow}/>
-		<div class='mt-6 p-8 grid grid-cols-1 gap-2'>
-			<button type='submit' class='w-full bg-red-500 text-white p-2 rounded-md'>Save</button>
-		</div>
-	</form>
+<AppBar slotDefault="place-self-center">Results</AppBar>
+	{#each results as item}
+		<Card/>
+	{/each}
 		
-{/if} -->
+{/if}
 
 <style>
 	h1 {
