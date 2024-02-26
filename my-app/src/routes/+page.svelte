@@ -62,11 +62,11 @@
 		searching = true;
 		//TODO: fill out with actually getting supabase data
 		
-		setTimeout(() => {
+		// setTimeout(() => {
 			searching = false;
 			searched = true;
-		}
-		, 5000);
+		// }
+		// , 5000);
 
 	}
 
@@ -148,8 +148,8 @@
 	</div>
 
 	<!-- Submit Button -->
-	<div class="mx-auto">
-		<button type="submit" class="w-30 bg-blue-400 text-black p-2 rounded-md">Search</button>
+	<div class="col-span-2 text-center">
+		<button type="submit" class="w-30 bg-blue-400 text-black p-2 rounded-md mx-auto">Search</button>
 	</div>
 </form>
 {#if searching}
@@ -159,10 +159,19 @@
 {/if}
 
 {#if searched}
-<AppBar slotDefault="place-self-center">Results</AppBar>
+<div class='m-4 border-b border-t border-black mx-auto w-full'>
+	<h2 class="text-center text-4xl">Results</h2>
+</div>
+{/if}
+
+{#if searched}
+<div class='m-4 '>
 	{#each results as item}
-		<Card/>
+	<div class='m-4 '>
+		<Card />
+	</div>
 	{/each}
+</div>
 		
 {/if}
 
@@ -172,6 +181,12 @@
 		color: black;
 		text-align: center;
 		padding: 4rem;
+	}
+
+	h2 {
+		width: 100%;
+		color: black;
+		text-align: center;
 	}
 
 </style>
