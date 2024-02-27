@@ -3,6 +3,9 @@
 	import type { AutocompleteOption, PopupSettings  } from '@skeletonlabs/skeleton';
 	import { Alert } from 'flowbite-svelte';
 	import Card from '$lib/images/card.svelte'
+	import { supabase } from '$lib/images/supabaseClient';
+
+	export let data;
 
 	let searching = false;
 	let searched = false;
@@ -67,7 +70,7 @@
 			searched = true;
 		// }
 		// , 5000);
-
+		console.log(data.props);
 	}
 
 

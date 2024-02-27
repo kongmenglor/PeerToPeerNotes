@@ -58,7 +58,7 @@
 	<meta name="description" content="Information To Enter" />
 </svelte:head>
 
-<FileDropzone name="file_in" accept=".docx, .pdf, .png" class="text-4xl max-w-xl mx-auto p-8 bg-white shadow-md rounded-md p-4">
+<FileDropzone name="file_in" accept=".docx, .pdf, .png" class="h-80 text-4xl max-w-xl mx-auto p-8 bg-white shadow-md rounded-md p-4">
 	<svelte:fragment slot="message">Drag and Drop file... <br> (png, docx, pdf)</svelte:fragment>
 </FileDropzone>
 
