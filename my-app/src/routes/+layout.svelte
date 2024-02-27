@@ -7,7 +7,7 @@
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
-	import home_button from '$lib/images/home_button.png';
+	import home_button from '$lib/images/House_Icon.svg';
 			
 
 

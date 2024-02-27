@@ -67,7 +67,7 @@
 		<label for="class" class="bg-gray-300 block text-gray-700 mb-2 text-center w-30 p-2 border rounded-md">Class Number: </label>
 		<div class="grid grid-cols-2 space-x-4">
 			<input
-				class="input autocomplete border-0 bg-gray-300"
+				class="input autocomplete border-0 bg-gray-300 rounded-md"
 				type="search"
 				name="autocomplete-search-dept"
 				bind:value={dept_input}
@@ -82,7 +82,7 @@
 				/>
 			</div>
 			<input
-				class="input autocomplete border-0 bg-gray-300"
+				class="input autocomplete border-0 bg-gray-300 rounded-md"
 				type="search"
 				name="autocomplete-search-num"
 				bind:value={number_input}
@@ -101,7 +101,7 @@
 	<div class="mb-4 grid grid-cols-2 space-x-4">
 		<label for="teacher_name" class="bg-gray-300 block text-gray-700 mb-2 text-center w-30 p-2 border rounded-md">Teacher: </label>
 		<input
-			class="input autocomplete border-0 bg-gray-300"
+			class="input autocomplete border-0 bg-gray-300 rounded-md"
 			type="search"
 			name="autocomplete-search-num"
 			bind:value={teacher_input}

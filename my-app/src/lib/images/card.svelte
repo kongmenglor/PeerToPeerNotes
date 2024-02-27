@@ -64,14 +64,14 @@
 </script>
 
 <div class="p-4 bg-gray-300 text-black">
-    <div class='mb-4 grid grid-cols-2'>
+    <div class='mb-2 grid grid-cols-2'>
         <label for="temp" class="block text-black font-bold mb-2 left-1">{card_data.dept} {card_data.num} - {card_data.teacher} </label>
-        <label for="temp" class="block text-black font-bold mb-2 right-1">{fetchMonth(card_data.upload_date.getMonth())} {card_data.upload_date.getDay()}, {card_data.upload_date.getFullYear()}</label>
+        <label for="temp" style='float:right;' class="block text-black font-bold mb-2">{fetchMonth(card_data.upload_date.getMonth())} {card_data.upload_date.getDay()}, {card_data.upload_date.getFullYear()}</label>
     </div>
-    <div class='mb-4 grid grid-cols-3 space-x-4'>
-        <label for="temp" class="block text-black bg-green-300 font-bold">{rating_value.current}/{rating_value.max} </label>
+    <div class='mb-2 grid grid-cols-3 space-x-4'>
+        <label for="temp" class="m-2 block text-black text-center bg-green-300 font-bold">{rating_value.current}/{rating_value.max} </label>
         <button class="w-full bg-blue-500 text-black p-2 rounded-md" use:popup={popupClick}>Rate Notes</button>
-        <a style="float: right" href="/">
+        <a style="margin-top: 20px; float: right;" href="/">
             <img src={download_button} alt="download" style="width:30px; height: 30px; float: right;"/>
         </a>
     </div>
