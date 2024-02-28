@@ -71,6 +71,14 @@
 		// }
 		// , 5000);
 		console.log(data.props);
+
+		//download testing
+		downloadNotes();
+	}
+
+	//download testin function
+	async function downloadNotes(){
+		const { data, error } = await supabase.storage.from('notes').download('/11-18-2024.docx');
 	}
 
 
