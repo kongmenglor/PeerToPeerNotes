@@ -6,12 +6,11 @@
 
 	export let data;
 
+	let fetchedData;
+
 	let searching = false;
 	let searched = false;
 	let popup_visible = true;
-
-	// switch to using result array instead of counter
-	let results = ['filler', 'filler'];
 
 	//Temp values to fill out later
 	let dept_input = '';
@@ -60,29 +59,26 @@
 		placement: 'bottom',
 	};
 
-	function fetchData(){
+	async function fetchNotes(department: string, class_number: string, professor: string) {
+		const { data } = await supabase.schema('all_info').from('notes').select('department, class_number, professor, document_name, upload_date, current_rating').eq('department', department).eq('class_number', class_number).eq('professor', professor);
+		//const { data } = await supabase.schema('all_info').from('notes').select('department, class_number, professor, document_name');
+		fetchedData = data;
+	}
+
+	async function handleSubmit(){
 		//actual functionality
 		searching = true;
-		//TODO: fill out with actually getting supabase data
-		
-		// setTimeout(() => {
+		//Getting supabase data
+		await fetchNotes(dept_input, number_input, teacher_input);
+		setTimeout(() => {
 			searching = false;
 			searched = true;
-		// }
-		// , 5000);
-		console.log(data.props);
-
-		//download testing
-		downloadNotes();
-	}
-
-	//download testin function
-	async function downloadNotes(){
-		const { data, error } = await supabase.storage.from('notes').download('/11-18-2024.docx');
-	}
-
-
-					
+		}
+		, 5000);
+		//get rid of this later
+		//console.log(data.props);
+	};
+	
 </script>
 
 <svelte:head>
@@ -110,7 +106,7 @@
 </div>
 			
 
-<form on:submit|preventDefault={fetchData} class="max-w-2xl mx-auto p-8 bg-gray-300 shadow-md rounded-md grid grid-cols-2 space-x-4">
+<form on:submit|preventDefault={handleSubmit} class="max-w-2xl mx-auto p-8 bg-gray-300 shadow-md rounded-md grid grid-cols-2 space-x-4">
 	<div class="mb-4">
 		<label for="teacher_name" class="block text-gray-700 font-bold mb-2">Teacher Name: </label>
 		<input
@@ -184,9 +180,9 @@
 
 {#if searched}
 <div class='m-4 '>
-	{#each results as item}
+	{#each fetchedData as item}
 	<div class='m-4 '>
-		<Card />
+		<Card card_dept={item.department} card_num={item.class_number} card_prof={item.professor} card_upload_date={item.upload_date} card_current_rating={item.current_rating} card_document_name={item.document_name}/>
 	</div>
 	{/each}
 </div>

@@ -4,10 +4,38 @@
     import bar_empty from '$lib/images/LoadingBarEmpty.svg'
     import bar_full from '$lib/images/LoadingBarFull.svg'
     import download_button from '$lib/images/download_button.png';
-    
-    export let card_data = {dept: 'DEFAULT', num: 'DEFAULT', teacher: 'DEFAULT', upload_date: new Date(2024, 0, 1), current_rating: 0.1};
+	import { supabase } from './supabaseClient';
+
+    export let card_dept = 'DEFAULT';
+    export let card_num = 'DEFAULT';
+    export let card_prof = 'DEFAULT';
+    export let card_upload_date = new Date(2024, 0, 1);
+    export let card_current_rating = 0.1;
+    export let card_document_name = 'DEFAULT';
+
+    let card_data = {dept: card_dept, num: card_num, teacher: card_prof, upload_date: card_upload_date, current_rating: card_current_rating, document_name: card_document_name};
 
     let rating_value = {current: card_data.current_rating, max: 5};
+
+    	//download testin function
+	async function downloadNotes(doc_name: string){
+		const {data: signedUrlData, error: signedUrlError} = await supabase.storage.from('notes').createSignedUrl(doc_name, 60);
+        if(signedUrlData != null){
+            // Create a link element to trigger the download
+            const link = document.createElement('a');
+            link.href = signedUrlData.signedUrl;
+            link.download = doc_name;
+
+            // Append the link to the document and trigger the click event
+            document.body.appendChild(link);
+            link.click();
+
+            // Remove the link from the document
+            document.body.removeChild(link);
+        }
+
+
+	}
 
 
     function iconClick(event: CustomEvent<{index:number}>): void {
@@ -66,14 +94,17 @@
 <div class="p-4 bg-gray-300 text-black">
     <div class='mb-2 grid grid-cols-2'>
         <label for="temp" class="block text-black font-bold mb-2 left-1">{card_data.dept} {card_data.num} - {card_data.teacher} </label>
-        <label for="temp" style='float:right;' class="block text-black font-bold mb-2">{fetchMonth(card_data.upload_date.getMonth())} {card_data.upload_date.getDay()}, {card_data.upload_date.getFullYear()}</label>
+        <!-- prod -->
+        <!-- <label for="temp" style='float:right;' class="block text-black font-bold mb-2">{fetchMonth(card_data.upload_date.getMonth())} {card_data.upload_date.getDay()}, {card_data.upload_date.getFullYear()}</label> -->
+        <!-- dev -->
+        <label for="temp" style='float:right;' class="block text-black font-bold mb-2">{card_data.upload_date} {card_data.upload_date}, {card_data.upload_date}</label>
     </div>
     <div class='mb-2 grid grid-cols-3 space-x-4'>
         <label for="temp" class="m-2 block text-black text-center bg-green-300 font-bold">{rating_value.current}/{rating_value.max} </label>
         <button class="w-full bg-blue-500 text-black p-2 rounded-md" use:popup={popupClick}>Rate Notes</button>
-        <a style="margin-top: 20px; float: right;" href="/">
+        <button style="margin-top: 20px; float: right;" on:click={() => downloadNotes(card_data.document_name)}>
             <img src={download_button} alt="download" style="width:30px; height: 30px; float: right;"/>
-        </a>
+        </button>
     </div>
 </div>
 
