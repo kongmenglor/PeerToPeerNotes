@@ -16,19 +16,9 @@
 	let dept_input = '';
 	let number_input = '';
 	let teacher_input = '';
-	let class_dept_list:  AutocompleteOption<string> [] = [
-		{label: 'CSCI', value:'CSCI'}, 
-		{label: 'HASS', value:'HASS'} 
-	];
-	let class_number_list:  AutocompleteOption<string> [] = [
-		{label: '101', value:'101'}, 
-		{label: '102', value:'102'} 
-	];
-	let teacher_list:  AutocompleteOption<string> [] = [
-		{label: 'Bonkers McBonk', value:'Bonkers McBonk'}, 
-		{label: 'Zippy Wow III', value:'Zippy Wow III'} 
-	];
-
+	let class_dept_list:  AutocompleteOption<string> [] = data.props.departments;
+	let class_number_list:  AutocompleteOption<string> [] = data.props.class_numbers;
+	let teacher_list:  AutocompleteOption<string> [] = data.props.professors;
 	function onDeptSelect(event: CustomEvent<AutocompleteOption<string>>): void {
 		dept_input = event.detail.label;
 	}
@@ -60,7 +50,18 @@
 	};
 
 	async function fetchNotes(department: string, class_number: string, professor: string) {
-		const { data } = await supabase.schema('all_info').from('notes').select('department, class_number, professor, document_name, upload_date, current_rating').eq('department', department).eq('class_number', class_number).eq('professor', professor);
+		//if prof is entered
+		if(professor.length > 0){
+			const { data } = await supabase.schema('all_info').from('notes').select('department, class_number, professor, document_name, upload_date, current_rating').eq('department', department).eq('class_number', class_number).eq('professor', professor);
+			//if prof is entered and we get nothing for that prof, class number, and dept
+			if(data?.length == 0){
+				const { data } = await supabase.schema('all_info').from('notes').select('department, class_number, professor, document_name, upload_date, current_rating').eq('department', department).eq('class_number', class_number);
+			}
+		}
+		//if no prof is entered
+		else{
+			const { data } = await supabase.schema('all_info').from('notes').select('department, class_number, professor, document_name, upload_date, current_rating').eq('department', department).eq('class_number', class_number);
+		}
 		//const { data } = await supabase.schema('all_info').from('notes').select('department, class_number, professor, document_name');
 		fetchedData = data;
 	}

@@ -8,6 +8,7 @@
 	let uploading = false;
 	let uploaded = false;
 	let input_file: FileList;
+	let label_num = 1;
 
 	let dept_input = '';
 	let number_input = '';
@@ -56,20 +57,65 @@
 	};
 
 	async function placeInBucket() {
-		const {data, error} = await supabase.storage.from('notes').upload('/' + input_file[0].name, input_file[0]);
+		const {data, error} = await supabase.storage.from('notes').upload('/' + dept_input + number_input + teacher_input + label_num, input_file[0]);
 	}
+
+	async function getMostRecentNumber(){
+		const {data, error} = await supabase.schema('all_info').from('notes').select('document_name').eq('department', dept_input).eq('class_number', number_input).eq('professor', teacher_input);
+		let sorting_list: string[] = [];
+		if(data?.length > 0 ){
+			data?.forEach((element) =>{
+				sorting_list.push(element.document_name);
+			})
+
+			//after populating list, sort and find the biggest
+			sorting_list.sort();
+			let most_recent_name = sorting_list[sorting_list.length - 1];
+			let most_recent_number = most_recent_name[most_recent_name.length - 1];
+			label_num = parseInt(most_recent_number) + 1;
+		}
+	}
+
+	async function addDeptToDataBase(dept: string){
+		const { data, error } = await supabase.schema('all_info').from('departments').select('*').eq('department', dept);
+		if(data?.length == 0){
+			await supabase.schema('all_info').from('departments').insert({department: dept});
+		}
+	}
+
+	async function addClassNumToDataBase(num: string){
+		const { data, error } = await supabase.schema('all_info').from('class_numbers').select('*').eq('class_number', num);
+		if(data?.length == 0){
+			await supabase.schema('all_info').from('class_numbers').insert({class_number: num});
+		}
+	}
+
+
+	async function addProfToDataBase(prof: string){
+		const { data, error } = await supabase.schema('all_info').from('professors').select('*').eq('full_name', prof);
+		if(data?.length == 0){
+			await supabase.schema('all_info').from('professors').insert({full_name: prof});
+		}
+	}
+
 
 	async function handleSubmit(){
 		//comment this out for prod
 		console.log(input_file);
+		getMostRecentNumber()
 		uploading = true;
 		//put it into bucket
 			setTimeout(async () => {
 				placeInBucket();
 				//put into database
-				const { data } = await supabase.schema('all_info').from('notes').insert({department: dept_input, class_number: number_input, professor: teacher_input, document_name: input_file[0].name, upload_date: new Date(), current_rating: 5});
+				const { data } = await supabase.schema('all_info').from('notes').insert({department: dept_input, class_number: number_input, professor: teacher_input, document_name: dept_input + number_input + teacher_input + label_num, upload_date: new Date(), current_rating: 5});
 			}
 			, 5000);
+
+			//check if department, class number, and prof already exist. If they don't add them to database
+			addDeptToDataBase(dept_input);
+			addClassNumToDataBase(number_input);
+			addProfToDataBase(teacher_input);
 
 		setTimeout(() => {
 			uploading = false;
