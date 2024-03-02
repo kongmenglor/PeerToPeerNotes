@@ -8,6 +8,11 @@ const config = {
   kit: {
     adapter: adapter(),
   },
+  prerender: {
+    onError: () => {
+      return "continue";
+    }
+  }
 };
 
 export default config;
