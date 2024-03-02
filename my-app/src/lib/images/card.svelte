@@ -13,6 +13,9 @@
     export let card_current_rating = 0.1;
     export let card_document_name = 'DEFAULT';
 
+    let date_present = false;
+    let number_downloads = 0;
+
     let card_data = {dept: card_dept, num: card_num, teacher: card_prof, upload_date: card_upload_date, current_rating: card_current_rating, document_name: card_document_name};
 
     let rating_value = {current: card_data.current_rating, max: 5};
@@ -33,9 +36,36 @@
             // Remove the link from the document
             document.body.removeChild(link);
         }
+        checkMetrics();
+        setTimeout(() => {
+            storeMetrics();
+        }, 3000);
 
 
 	}
+
+    async function storeMetrics(){
+        let today = new Date();
+        console.log(today.getFullYear() + '-' + (today.getMonth() + 1)  + '-' + today.getDate());
+        //if date already exists:
+        if(date_present){
+            await supabase.schema('all_info').from('daily_downloads').update({downloads: number_downloads + 1}).eq('date', today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
+        }
+        //if not, create date and make download number  = 1
+        else{
+            await supabase.schema('all_info').from('daily_downloads').insert({date: today.getFullYear() + '-' + (today.getMonth() + 1)  + '-' + today.getDate(), downloads: 1});
+        }
+    }
+
+    async function checkMetrics(){
+        let new_date = new Date();
+        const { data } = await supabase.schema('all_info').from('daily_downloads').select('*').eq('date', new_date.getFullYear() + '-' + (new_date.getMonth() + 1) + '-' + new_date.getDate());
+        console.log(data);
+        if(data?.length != 0){
+            date_present = true;
+            number_downloads = data[0].downloads;
+        }
+    }
 
 
     function iconClick(event: CustomEvent<{index:number}>): void {
@@ -95,7 +125,7 @@
     <div class='mb-2 grid grid-cols-2'>
         <label for="temp" class="block text-black font-bold mb-2 left-1">{card_data.dept} {card_data.num} - {card_data.teacher} </label>
         <!-- prod -->
-        <!-- <label for="temp" style='float:right;' class="block text-black font-bold mb-2">{fetchMonth(card_data.upload_date.getMonth())} {card_data.upload_date.getDay()}, {card_data.upload_date.getFullYear()}</label> -->
+        <!-- <label for="temp" style='float:right;' class="block text-black font-bold mb-2">{fetchMonth(card_data.upload_date.getMonth())} {card_data.upload_date.getDate()}, {card_data.upload_date.getFullYear()}</label> -->
         <!-- dev -->
         <label for="temp" style='float:right;' class="block text-black font-bold mb-2">{card_data.upload_date} {card_data.upload_date}, {card_data.upload_date}</label>
     </div>

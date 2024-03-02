@@ -57,17 +57,21 @@
 			if(data?.length == 0){
 				const { data } = await supabase.schema('all_info').from('notes').select('department, class_number, professor, document_name, upload_date, current_rating').eq('department', department).eq('class_number', class_number);
 			}
+			fetchedData = data;
+			console.log(fetchedData);
 		}
 		//if no prof is entered
 		else{
 			const { data } = await supabase.schema('all_info').from('notes').select('department, class_number, professor, document_name, upload_date, current_rating').eq('department', department).eq('class_number', class_number);
+			fetchedData = data;
+			console.log(fetchedData);
 		}
 		//const { data } = await supabase.schema('all_info').from('notes').select('department, class_number, professor, document_name');
-		fetchedData = data;
 	}
 
 	async function handleSubmit(){
 		//actual functionality
+		searched = false;
 		searching = true;
 		//Getting supabase data
 		await fetchNotes(dept_input, number_input, teacher_input);

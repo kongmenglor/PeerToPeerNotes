@@ -3,7 +3,7 @@
 	import type { AutocompleteOption, PopupSettings  } from '@skeletonlabs/skeleton';
 	import { supabase } from '$lib/images/supabaseClient';
 
-	//Temp values to fill out later
+	export let data;
 
 	let uploading = false;
 	let uploaded = false;
@@ -13,18 +13,9 @@
 	let dept_input = '';
 	let number_input = '';
 	let teacher_input = '';
-	let class_dept_list:  AutocompleteOption<string> [] = [
-		{label: 'CSCI', value:'CSCI'}, 
-		{label: 'HASS', value:'HASS'} 
-	];
-	let class_number_list:  AutocompleteOption<string> [] = [
-		{label: '101', value:'101'}, 
-		{label: '102', value:'102'} 
-	];
-	let teacher_list:  AutocompleteOption<string> [] = [
-		{label: 'Bonkers McBonk', value:'Bonkers McBonk'}, 
-		{label: 'Zippy Wow III', value:'Zippy Wow III'} 
-	];
+	let class_dept_list:  AutocompleteOption<string> [] = data.props.departments;
+	let class_number_list:  AutocompleteOption<string> [] = data.props.class_numbers;
+	let teacher_list:  AutocompleteOption<string> [] = data.props.professors;
 
 	function onDeptSelect(event: CustomEvent<AutocompleteOption<string>>): void {
 		dept_input = event.detail.label;
@@ -147,8 +138,12 @@
 
 
 <FileDropzone bind:files={input_file} name="file_in" accept=".docx, .pdf, .png" class="h-80 text-4xl max-w-xl mx-auto p-8 bg-white shadow-md rounded-md p-4">
-	<svelte:fragment slot="message">Drag and Drop file... <br> (png, docx, pdf)</svelte:fragment>
+	<svelte:fragment slot="message">Select or Drag and Drop one file... <br> (png, docx, pdf)</svelte:fragment>
 </FileDropzone>
+
+{#if input_file}
+	<span class="block text-gray-700 font-bold mb-2 text-center p-2">File: {input_file[0].name} accepted!</span>
+{/if}
 
 <form on:submit|preventDefault={handleSubmit} class="max-w-xl mx-auto p-8 shadow-md rounded-md">
 	<div class="mb-4 grid grid-cols-2 space-x-4">
