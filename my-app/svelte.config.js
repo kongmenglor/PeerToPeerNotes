@@ -7,10 +7,12 @@ const config = {
 
   kit: {
     adapter: adapter(),
-    paths: {
-        base: process.env.NODE_ENV === 'production' ? '/sveltekit-github-pages' : '',
-    }
   },
+  prerender: {
+    onError: () => {
+      return "continue";
+    }
+  }
 };
 
 export default config;

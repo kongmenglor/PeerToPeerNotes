@@ -102,7 +102,7 @@
 				//put into database
 				let new_date = new Date();
 				let place_date = new_date.getFullYear() + '-' + (new_date.getMonth() + 1) + '-' + new_date.getDate();
-				const { data } = await supabase.schema('all_info').from('notes').insert({department: dept_input, class_number: number_input, professor: teacher_input, document_name: dept_input + number_input + teacher_input + label_num, upload_date: place_date, current_rating: 5});
+				const { data } = await supabase.schema('all_info').from('notes').insert({department: dept_input, class_number: number_input, professor: teacher_input, document_name: dept_input + number_input + teacher_input + label_num, upload_date: place_date, current_rating: 5, number_of_ratings: 1});
 			}
 			, 5000);
 
