@@ -1,4 +1,4 @@
-let base = "/kongmenglor.github.io";
+let base = "/PeerToPeerNotes";
 let assets = base;
 const initial = { base, assets };
 function override(paths) {
