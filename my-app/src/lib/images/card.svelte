@@ -15,8 +15,6 @@
 
     let date_present = false;
     let number_downloads = 0;
-    let rating_stats;
-    let newRating;
 
     let card_data = {dept: card_dept, num: card_num, teacher: card_prof, upload_date: card_upload_date, current_rating: card_current_rating, document_name: card_document_name};
 
@@ -69,25 +67,10 @@
         }
     }
 
-    async function getCurrentRatingStats(){
-        const { data, error } = await supabase.schema('all_info').from('notes').select('current_rating, number_of_ratings').eq('document_name', card_data.document_name);
-        rating_stats = data;
-    }
-
-    async function setNewRating(){
-        rating_value.current = newRating;
-        await supabase.schema('all_info').from('notes').update({number_of_ratings: rating_stats[0].number_of_ratings + 1, current_rating: newRating}).eq('document_name', card_data.document_name);
-    }
-
 
     function iconClick(event: CustomEvent<{index:number}>): void {
         //change this later to calculate average and send it off to database
-        getCurrentRatingStats();
-        setTimeout(() => {
-            let tempRating = event.detail.index;
-            newRating = (rating_stats[0].current_rating + tempRating) / (rating_stats[0].number_of_ratings + 1);
-    	    setNewRating();
-        }, 5000);
+    	rating_value.current = event.detail.index;
     }
 
     const popupClick: PopupSettings = {
