@@ -9,7 +9,7 @@
     export let card_dept = 'DEFAULT';
     export let card_num = 'DEFAULT';
     export let card_prof = 'DEFAULT';
-    export let card_upload_date = new Date(2024, 0, 1);
+    export let card_upload_date = '';
     export let card_current_rating = 0.1;
     export let card_document_name = 'DEFAULT';
 
@@ -79,43 +79,53 @@
         placement: 'bottom'
     };
 
-    function fetchMonth(val: Number){
-        if(val == 0){
-            return "Jan"
+    function fetchDate(val: string){
+        let parts = val.split("-");
+        let year = parts[0];
+        let month = parts[1];
+        let day = parts[2];
+
+        let month_text = "";
+        //year, month, day
+        if(month == "01"){
+            month_text = "Jan";
         }
-        else if(val == 1){
-            return "Feb"
+        else if(month == "02"){
+            month_text = "Feb"
         }
-        else if(val == 2){
-            return "Mar"
+        else if(month == "03"){
+            month_text = "Mar"
         }
-        else if(val == 3){
-            return "Apr"
+        else if(month == "04"){
+            month_text = "Apr"
         }
-        else if(val == 4){
-            return "May"
+        else if(month == "05"){
+            month_text = "May"
         }
-        else if(val == 5){
-            return "Jun"
+        else if(month == "06"){
+            month_text = "Jun"
         }
-        else if(val == 6){
-            return "Jul"
+        else if(month == "07"){
+            month_text = "Jul"
         }
-        else if(val == 7){
-            return "Aug"
+        else if(month == "08"){
+            month_text = "Aug"
         }
-        else if(val == 8){
-            return "Sep"
+        else if(month == "09"){
+            month_text = "Sep"
         }
-        else if(val == 9){
-            return "Oct"
+        else if(month == "10"){
+            month_text = "Oct"
         }
-        else if(val == 10){
-            return "Nov"
+        else if(month == "11"){
+            month_text = "Nov"
         }
-        else if(val == 11){
-            return "Dec"
+        else if(month == "12"){
+            month_text = "Dec"
         }
+
+        let display_string = month_text + " " + day + ", " + year;
+        return display_string;
     }
 					
 						
@@ -125,9 +135,9 @@
     <div class='mb-2 grid grid-cols-2'>
         <label for="temp" class="block text-black font-bold mb-2 left-1">{card_data.dept} {card_data.num} - {card_data.teacher} </label>
         <!-- prod -->
-        <!-- <label for="temp" style='float:right;' class="block text-black font-bold mb-2">{fetchMonth(card_data.upload_date.getMonth())} {card_data.upload_date.getDate()}, {card_data.upload_date.getFullYear()}</label> -->
+        <label for="temp" style='float:right;' class="block text-black font-bold mb-2">{fetchDate(card_data.upload_date)}</label>
         <!-- dev -->
-        <label for="temp" style='float:right;' class="block text-black font-bold mb-2">{card_data.upload_date} {card_data.upload_date}, {card_data.upload_date}</label>
+        <!-- <label for="temp" style='float:right;' class="block text-black font-bold mb-2">{card_data.upload_date} {card_data.upload_date}, {card_data.upload_date}</label> -->
     </div>
     <div class='mb-2 grid grid-cols-3 space-x-4'>
         <label for="temp" class="m-2 block text-black text-center bg-green-300 font-bold">{rating_value.current}/{rating_value.max} </label>

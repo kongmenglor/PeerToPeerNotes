@@ -48,6 +48,7 @@
 	};
 
 	async function placeInBucket() {
+		//console.log(label_num);
 		const {data, error} = await supabase.storage.from('notes').upload('/' + dept_input + number_input + teacher_input + label_num, input_file[0]);
 	}
 
@@ -99,7 +100,9 @@
 			setTimeout(async () => {
 				placeInBucket();
 				//put into database
-				const { data } = await supabase.schema('all_info').from('notes').insert({department: dept_input, class_number: number_input, professor: teacher_input, document_name: dept_input + number_input + teacher_input + label_num, upload_date: new Date(), current_rating: 5});
+				let new_date = new Date();
+				let place_date = new_date.getFullYear() + '-' + (new_date.getMonth() + 1) + '-' + new_date.getDate();
+				const { data } = await supabase.schema('all_info').from('notes').insert({department: dept_input, class_number: number_input, professor: teacher_input, document_name: dept_input + number_input + teacher_input + label_num, upload_date: place_date, current_rating: 5});
 			}
 			, 5000);
 
@@ -120,7 +123,7 @@
 </script>
 
 <svelte:head>
-	<title>PeerToPeerNotes - Upload</title>
+	<title>Peer To Peer Notes - Upload</title>
 	<meta name="description" content="Information To Enter" />
 </svelte:head>
 

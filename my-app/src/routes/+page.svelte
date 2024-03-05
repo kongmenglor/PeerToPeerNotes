@@ -87,7 +87,7 @@
 </script>
 
 <svelte:head>
-	<title>PeerToPeerNotes</title>
+	<title>Peer To Peer Notes</title>
 	<meta name="description" content="Information To Enter" />
 </svelte:head>
 
@@ -107,7 +107,7 @@
 {/if}
 
 <div>
-	<h1>PeerToPeerNotes</h1>
+	<h1>Peer To Peer Notes</h1>
 </div>
 			
 
