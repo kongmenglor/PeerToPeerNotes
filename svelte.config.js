@@ -7,7 +7,7 @@ const config = {
 
   kit: {
     adapter: adapter({
-      fallback: 'app.html',
+      fallback: 'src/app.html',
     }),
     paths: {
       base: "/PeerToPeerNotes",
