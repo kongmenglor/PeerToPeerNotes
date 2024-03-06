@@ -12,10 +12,10 @@ return {
 	_: {
 		client: {"start":"_app/immutable/entry/start.DbN6hddB.js","app":"_app/immutable/entry/app.Bj3ZEzu7.js","imports":["_app/immutable/entry/start.DbN6hddB.js","_app/immutable/chunks/entry.DWUsElR8.js","_app/immutable/chunks/scheduler.DIEZGXoH.js","_app/immutable/chunks/index.BO4oSOSv.js","_app/immutable/entry/app.Bj3ZEzu7.js","_app/immutable/chunks/preload-helper.BQ24v_F8.js","_app/immutable/chunks/scheduler.DIEZGXoH.js","_app/immutable/chunks/index.6lkpOiKv.js"],"stylesheets":[],"fonts":[],"uses_env_dynamic_public":false},
 		nodes: [
-			__memo(() => import('./nodes/0.js')),
-			__memo(() => import('./nodes/1.js')),
-			__memo(() => import('./nodes/2.js')),
-			__memo(() => import('./nodes/3.js'))
+			__memo(() => import('./server/nodes/0.js')),
+			__memo(() => import('./server/nodes/1.js')),
+			__memo(() => import('./server/nodes/2.js')),
+			__memo(() => import('./server/nodes/3.js'))
 		],
 		routes: [
 			{
@@ -41,3 +41,5 @@ return {
 	}
 }
 })();
+
+export const prerendered = new Set([]);

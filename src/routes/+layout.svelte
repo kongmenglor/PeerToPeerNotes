@@ -8,7 +8,8 @@
 	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 	import home_button from '$lib/images/House_Icon.svg';
-	import { base } from "$app/paths"		
+			
+
 
 </script>
 
@@ -18,13 +19,13 @@
 			<ul class="horizontal">
 				<!-- Change this out for home button when possible -->
 				<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-					<a href="{base}/">
+					<a href="/">
 						<img class='right-px' src={home_button} alt="home_button" style="width:40px; height: 40px;"/>
 					</a>
 				</li>
 				
 				<li aria-current={$page.url.pathname === '/upload' ? 'page' : undefined}>
-					<a type="button" class="btn variant-filled bg-gray-300 block text-center border rounded-md gap-4" href="{base}/upload">Upload Notes</a>
+					<a type="button" class="btn variant-filled bg-gray-300 block text-center border rounded-md gap-4" href="/upload">Upload Notes</a>
 				</li>
 			</ul>
 		<!-- --- -->

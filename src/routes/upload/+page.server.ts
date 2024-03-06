@@ -2,7 +2,6 @@
 // it so that it gets served as a static asset in production
 import { supabase } from '$lib/images/supabaseClient';
 
-/** @type {import('./$types').PageLoad} */
 export async function load({params}) {
 
     const professors = await getProfData();
