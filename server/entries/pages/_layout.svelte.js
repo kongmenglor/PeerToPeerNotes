@@ -3,6 +3,7 @@ import { w as writable } from "../../chunks/index.js";
 import "../../chunks/ProgressBar.svelte_svelte_type_style_lang.js";
 import { p as page } from "../../chunks/stores.js";
 import { computePosition, autoUpdate, offset, shift, flip, arrow } from "@floating-ui/dom";
+import { b as base } from "../../chunks/paths.js";
 const storePopup = writable(void 0);
 const cBaseAppShell = "w-full h-full flex flex-col overflow-hidden";
 const cContentArea = "w-full h-full flex overflow-hidden";
@@ -76,7 +77,7 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$unsubscribe_page();
   return `${validate_component(AppShell, "AppShell").$$render($$result, {}, {}, {
     header: () => {
-      return ` <ul class="horizontal svelte-1xknyrw"> <li${add_attribute("aria-current", $page.url.pathname === "/" ? "page" : void 0, 0)}><a href="/" data-svelte-h="svelte-1mwclw4"><img class="right-px"${add_attribute("src", home_button, 0)} alt="home_button" style="width:40px; height: 40px;"></a></li> <li${add_attribute("aria-current", $page.url.pathname === "/upload" ? "page" : void 0, 0)}><a type="button" class="btn variant-filled bg-gray-300 block text-center border rounded-md gap-4 svelte-1xknyrw" href="/upload" data-svelte-h="svelte-awzxkb">Upload Notes</a></li></ul> `;
+      return ` <ul class="horizontal svelte-1xknyrw"> <li${add_attribute("aria-current", $page.url.pathname === "/" ? "page" : void 0, 0)}><a href="${escape(base, true) + "/"}" data-svelte-h="svelte-1gamly5"><img class="right-px"${add_attribute("src", home_button, 0)} alt="home_button" style="width:40px; height: 40px;"></a></li> <li${add_attribute("aria-current", $page.url.pathname === "/upload" ? "page" : void 0, 0)}><a type="button" class="btn variant-filled bg-gray-300 block text-center border rounded-md gap-4 svelte-1xknyrw" href="${escape(base, true) + "/upload"}" data-svelte-h="svelte-sw1zc8">Upload Notes</a></li></ul> `;
     }
   })} <div class="app svelte-1xknyrw"><main class="svelte-1xknyrw">${slots.default ? slots.default({}) : ``}</main> </div>`;
 });
